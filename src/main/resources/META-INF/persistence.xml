@@ -1,0 +1,104 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+
+    <persistence-unit name="DSB" transaction-type="RESOURCE_LOCAL">
+        <description>Hibernate JPA Configuration DSB</description>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:mysql://localhost:3306/DSB?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
+            <property name="javax.persistence.jdbc.user" value="Kishan"/>
+            <property name="javax.persistence.jdbc.password" value="Kishan"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
+            <property name="hibernate.show_sql" value="none"/>
+            <property name="hibernate.format_sql" value="none"/>
+            <property name="hibernate.hbm2ddl.auto" value="none"/>
+        </properties>
+
+    </persistence-unit>
+
+    <persistence-unit name="HKB" transaction-type="RESOURCE_LOCAL">
+        <description>Hibernate JPA Configuration HKB</description>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:mysql://localhost:3306/HKB?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
+            <property name="javax.persistence.jdbc.user" value="Kishan"/>
+            <property name="javax.persistence.jdbc.password" value="Kishan"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
+            <property name="hibernate.show_sql" value="none"/>
+            <property name="hibernate.format_sql" value="none"/>
+            <property name="hibernate.hbm2ddl.auto" value="none"/>
+        </properties>
+
+    </persistence-unit>
+
+    <persistence-unit name="CBVS" transaction-type="RESOURCE_LOCAL">
+        <description>Hibernate JPA Configuration CBVS</description>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:mysql://localhost:3306/CBVS?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
+            <property name="javax.persistence.jdbc.user" value="Kishan"/>
+            <property name="javax.persistence.jdbc.password" value="Kishan"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
+            <property name="hibernate.show_sql" value="none"/>
+            <property name="hibernate.format_sql" value="none"/>
+            <property name="hibernate.hbm2ddl.auto" value="none"/>
+        </properties>
+
+    </persistence-unit>
+
+    <persistence-unit name="UATM" transaction-type="RESOURCE_LOCAL">
+        <description>Hibernate JPA Configuration DSB</description>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:mysql://localhost:3306/UATM?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
+            <property name="javax.persistence.jdbc.user" value="Kishan"/>
+            <property name="javax.persistence.jdbc.password" value="Kishan"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
+            <property name="hibernate.hbm2ddl.schema_filter_provider" value="config.Provider"/>
+            <property name="hibernate.show_sql" value="none"/>
+            <property name="hibernate.format_sql" value="none"/>
+            <property name="hibernate.hbm2ddl.auto" value="none"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>
+
+
+<!--
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+
+<persistence-unit name="PERSISTENCE">
+    <description> Hibernate JPA Configuration Example</description>
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+    <properties>
+        <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+        <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/hello_orm?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC" />
+        <property name="javax.persistence.jdbc.user" value="root" />
+        <property name="javax.persistence.jdbc.password" value="" />
+        <property name="hibernate.show_sql" value="true" />
+        <property name="hibernate.hbm2ddl.auto" value="none" />
+    </properties>
+
+</persistence-unit>
+
+</persistence>-->
