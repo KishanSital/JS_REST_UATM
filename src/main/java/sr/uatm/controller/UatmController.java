@@ -1,11 +1,9 @@
 package sr.uatm.controller;
 
-import sr.uatm.designpatterns.creational.builder.entities.bank.BankAccount;
+import com.github.KishanSital.authenticator.serviceImpl.UserSessionServiceImpl;
 import sr.uatm.designpatterns.creational.builder.entities.uatm.Transaction;
-import sr.uatm.dto.BankDTO;
-import sr.uatm.dto.MoneyTransferDTO;
-import sr.uatm.dto.TransactionDTO;
-import sr.uatm.dto.UserDTO;
+import sr.uatm.dto.*;
+import sr.uatm.serviceImpl.CardSessionServiceImpl;
 import sr.uatm.serviceImpl.UatmControllerServiceImpl;
 import sr.uatm.services.UatmControllerService;
 
@@ -86,18 +84,31 @@ public class UatmController {
     }
 
     @Path("/bank-accounts")
-    @GET
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<BankAccount> getBankAccount(Long accountNumber) {
-        return uatmControllerService.getBankAccounts(accountNumber);
+    public List<BankAccountDTO> getBankAccount(BankAccountDTO bankAccountDTO) {
+
+        return uatmControllerService.getBankAccounts(bankAccountDTO != null && bankAccountDTO.getAccountNumber() != null ? bankAccountDTO.getAccountNumber() : CardSessionServiceImpl.currentAccountNumber);
+    }
+
+    @Path("/bank-balance")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<BankAccountDTO> getBankBalance(BankAccountDTO bankAccountDTO) {
+        return uatmControllerService.getBankAccounts(bankAccountDTO != null &&
+                bankAccountDTO.getAccountNumber() != null ? bankAccountDTO.getAccountNumber() :
+                CardSessionServiceImpl.currentAccountNumber);
     }
 
     @Path("/transfer-money")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean transferMoney(MoneyTransferDTO moneyTransferDTO){
-        return uatmControllerService.transferMoney(moneyTransferDTO);
+    public boolean transferMoney(MoneyTransferDTO moneyTransferDTO) {
+        boolean transferStatus = uatmControllerService.transferMoney(moneyTransferDTO);
+        CardSessionServiceImpl.currentAccountNumber = null;
+        return transferStatus;
     }
 }

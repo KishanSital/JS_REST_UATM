@@ -2,10 +2,7 @@ package sr.uatm.services;
 
 import sr.uatm.designpatterns.creational.builder.entities.bank.BankAccount;
 import sr.uatm.designpatterns.creational.builder.entities.uatm.Transaction;
-import sr.uatm.dto.BankDTO;
-import sr.uatm.dto.MoneyTransferDTO;
-import sr.uatm.dto.TransactionDTO;
-import sr.uatm.dto.UserDTO;
+import sr.uatm.dto.*;
 
 import java.util.List;
 
@@ -29,7 +26,7 @@ public interface UatmControllerService {
 
     List<Transaction> clearAllTransactions();
 
-    List<BankAccount> getBankAccounts(Long accountNumber);
+    List<BankAccountDTO> getBankAccounts(Long accountNumber);
 
     boolean transferMoney(MoneyTransferDTO moneyTransferDTO);
 }

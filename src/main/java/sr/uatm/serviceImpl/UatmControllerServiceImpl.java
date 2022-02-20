@@ -7,10 +7,7 @@ import sr.uatm.designpatterns.creational.builder.entities.uatm.Transaction;
 import sr.uatm.designpatterns.creational.builder.entities.uatm.User;
 import sr.uatm.designpatterns.creational.factory.JPAConfiguration;
 import sr.uatm.designpatterns.creational.factory.JPAConfigurationFactory;
-import sr.uatm.dto.BankDTO;
-import sr.uatm.dto.MoneyTransferDTO;
-import sr.uatm.dto.TransactionDTO;
-import sr.uatm.dto.UserDTO;
+import sr.uatm.dto.*;
 import sr.uatm.services.UatmControllerService;
 
 import java.math.BigDecimal;
@@ -145,18 +142,26 @@ public class UatmControllerServiceImpl implements UatmControllerService {
     }
 
     @Override
-    public List<BankAccount> getBankAccounts(Long accountNumber) {
-        List<BankAccount> bankAccounts;
+    public List<BankAccountDTO> getBankAccounts(Long accountNumber) {
+
+        List<BankAccountDTO> bankAccounts;
 
         if (accountNumber == null) {
             bankAccounts = uatmService.getBankCardByBankAndCardNumberAndBankPin(CardSessionServiceImpl.bankCard.getCardNumber(),
-                    CardSessionServiceImpl.bankCard.getBankPin()).getBankAccounts();
+                    CardSessionServiceImpl.bankCard.getBankPin()).getBankAccounts().stream()
+                    .map(bankAccount -> new BankAccountDTO(bankAccount.getAccountNumber(),
+                            bankAccount.getBankAccountType().getBankAccountTypeDescription(),
+                            bankAccount.getBankBalance().toString(),
+                            bankAccount.getBankCurrency().getCurrencyCode()))
+                    .collect(Collectors.toList());
             return bankAccounts;
         }
-
         bankAccounts = uatmService.getBankCardByBankAndCardNumberAndBankPin(CardSessionServiceImpl.bankCard.getCardNumber(),
-                CardSessionServiceImpl.bankCard.getBankPin()).getBankAccounts()
-                .stream()
+                CardSessionServiceImpl.bankCard.getBankPin()).getBankAccounts().stream()
+                .map(bankAccount -> new BankAccountDTO(bankAccount.getAccountNumber(),
+                        bankAccount.getBankAccountType().getBankAccountTypeDescription(),
+                        bankAccount.getBankBalance().toString(),
+                        bankAccount.getBankCurrency().getCurrencyCode()))
                 .filter(bankAccount -> bankAccount.getAccountNumber().equals(accountNumber))
                 .collect(Collectors.toList());
         return bankAccounts;
