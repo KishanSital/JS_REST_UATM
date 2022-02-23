@@ -69,6 +69,8 @@ public class UatmController {
         return uatmControllerService.connectToBank(bankDTO);
     }
 
+
+    //TODO: add year filter
     @Path("/transactions")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

@@ -1,4 +1,4 @@
-var isUserLoggedIn = false;
+let isUserLoggedIn = false;
 const restUrl = '/JS_REST_UATM/api/uatm/';
 const siteUrl = '/JS_REST_UATM/uatm/';
 
