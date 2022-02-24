@@ -29,9 +29,11 @@
     margin-left: 25%;
 
 
-}.btn-custom-container {
+}
+
+.btn-custom-container {
     font-size: 24px;
-    width:  75%;
+    width: 75%;
     height: auto;
     outline: 1cm black;
     margin-left: 25%;
@@ -42,8 +44,20 @@
     height: auto;
     margin: 0 auto;
 }
+
 .custom-child {
     width: 100%;
     height: auto;
     margin: 0 auto;
+}
+
+.center-table {
+    width: 50%;
+    margin: auto;
+    padding: 10px;
+
+}.center-table-transactions {
+    width: 75%;
+    margin: auto;
+    padding: 10px;
 }
