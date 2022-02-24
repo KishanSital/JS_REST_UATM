@@ -125,8 +125,19 @@ public class UatmControllerServiceImpl implements UatmControllerService {
     }
 
     @Override
-    public List<TransactionDTO> getAllTransactions() {
+    public List<TransactionDTO> getAllTransactions(TransactionDTO transactionDTO) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+
+        if (transactionDTO != null && transactionDTO.getTransactionDate() != null) {
+            return uatmService.getTransactionByYear(transactionDTO.getTransactionDate().trim()).stream().map(transaction ->
+                    new TransactionDTO(transaction.getTransactionDate().format(formatter),
+                            transaction.getTransactionAmount(),
+                            transaction.getTransactionDescription(),
+                            transaction.getTransactionSource())).collect(Collectors.toList());
+
+        }
+
+
         return uatmService.getAllTransactions().stream().map(transaction ->
                 new TransactionDTO(transaction.getTransactionDate().format(formatter),
                         transaction.getTransactionAmount(),

@@ -1,8 +1,11 @@
 function loadMoneyTransferView() {
     clearView();
     getConnectedBank();
-    viewBalanceForTransfer()
-    getBankAccounts()
+    if (isBankConnected) {
+        viewBalanceForTransfer()
+        getBankAccounts()
+    }
+
 }
 
 function viewBalanceForTransfer() {

@@ -70,12 +70,14 @@ public class UatmController {
     }
 
 
-    //TODO: add year filter
     @Path("/transactions")
-    @GET
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public List<TransactionDTO> getAllTransactions() {
-        return uatmControllerService.getAllTransactions();
+    @Consumes(MediaType.APPLICATION_JSON)
+
+    public List<TransactionDTO> getAllTransactions(TransactionDTO transactionDTO) {
+
+        return uatmControllerService.getAllTransactions(transactionDTO);
     }
 
     @Path("/clear-transactions")

@@ -1,8 +1,10 @@
 function loadBalanceView() {
     clearView();
     getConnectedBank();
-    viewBalance();
-    getBankAccounts();
+    if (isBankConnected) {
+        viewBalance();
+        getBankAccounts();
+    }
 
 }
 

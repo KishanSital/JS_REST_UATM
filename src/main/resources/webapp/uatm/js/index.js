@@ -4,7 +4,7 @@ const restUrl = '/JS_REST_UATM/api/uatm/';
 const siteUrl = '/JS_REST_UATM/uatm/';
 const views = document.getElementById("views");
 const tables = document.getElementById("tables");
-const sendMoney = document.getElementById("tables2");
+const sendMoney = document.getElementById("viewMoneySend");
 let sourceAccountForTransfer;
 
 function getConnectedBank() {
@@ -15,9 +15,11 @@ function getConnectedBank() {
             isBankConnected = JSON.parse(this.responseText);
             if (!isBankConnected) {
                 loadConnectBankMessage();
-                return;
+            } else {
+                isBankConnected = true;
             }
         }
+        return isBankConnected;
     };
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.send();

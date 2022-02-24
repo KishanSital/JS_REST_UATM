@@ -22,7 +22,7 @@ public interface UatmControllerService {
 
     boolean connectToBank(BankDTO bankDTO);
 
-    List<TransactionDTO> getAllTransactions();
+    List<TransactionDTO> getAllTransactions( TransactionDTO transactionDTO);
 
     List<Transaction> clearAllTransactions();
 

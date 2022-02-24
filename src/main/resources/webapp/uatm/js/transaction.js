@@ -3,29 +3,27 @@ function loadTransactionsView() {
     viewTransaction();
 }
 
+function clear() {
+    setTimeout(function () {
+        document.getElementById("nothingFound").remove();
+    }, 2000);
+}
+
 function viewTransaction() {
     views.innerHTML +=
         '<div class="bootstrap-iso custom-child">' +
-        '<h3 class="text-center">Transactions</h3>' +
+        '<h3 class="text-center">Transaction Year Report</h3>' +
         '<div class="btn-custom-container">' +
         '<div class="bootstrap-iso btn-custom-child">' +
-        '<input type="text" form class="form-control" name="datepicker" id="datepicker" onchange="getTransactionsData(this.value)"/>' +
+        '<input type="text" class="yearpicker" onchange="getTransactionsData(this.value)">' +
         '</div>' +
         '</div>';
-    $(document).ready(function(){
-        $("#datepicker").datepicker({
-            format: "yyyy",
-            viewMode: "years",
-            minViewMode: "years",
-            autoclose:true
-        });
-    })
+
+    $('.yearpicker').yearpicker()
+
 }
 
 function getTransactionsData(value) {
-
-    console.log(value);
-
     clearTableData();
     let xhttp;
     xhttp = new XMLHttpRequest();
@@ -36,21 +34,20 @@ function getTransactionsData(value) {
             if (bankAccounts && bankAccounts.length) {
                 generateTable(bankAccounts);
             } else {
-                views.innerHTML =
-                    '<div class="card custom-container">' +
-                    '<div class="bootstrap-iso custom-child">' +
-                    '<h3 class="text-center">Transactions</h3>' +
-                    '<h4 class="text-center">No transactions were found for.</h4>' +
-                    '</div>' +
-                    '</div>';
+                views.innerHTML +=
+                    '<h4 id="nothingFound" class="text-center"></h4>';
+                document.getElementById('nothingFound').innerHTML = "No transactions were found for year " + value + " <br> So we've displayed the complete report";
+                $('.yearpicker').yearpicker();
+                clear();
             }
+
         }
     };
-    xhttp.open("GET", (restUrl + 'transactions'), true);
+    xhttp.open("POST", (restUrl + 'transactions'), true);
     xhttp.setRequestHeader("Content-Type", "application/json");
     if (value) {
         xhttp.send(JSON.stringify({
-            "year": +value
+            "transactionDate": +value
         }));
     } else {
         xhttp.send();

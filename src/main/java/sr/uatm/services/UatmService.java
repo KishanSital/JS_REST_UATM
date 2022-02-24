@@ -35,4 +35,6 @@ public interface UatmService {
     Map<Integer, String> getBankOptions();
 
     Map<String, BigDecimal> getOvermaakKoersMap();
+
+    List<Transaction> getTransactionByYear(String year);
 }

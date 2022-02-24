@@ -9,7 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.Optional;
 
 public class UatmDAO {
     private EntityManager entityManager;
@@ -61,5 +60,15 @@ public class UatmDAO {
         int rowsDeleted = query.executeUpdate();
         entityManager.getTransaction().commit();
         return rowsDeleted;
+    }
+
+    public List<Transaction> findAllTransactionsByYear(String year) {
+        Integer yearValue = Integer.valueOf(year);
+        String jpql = "select c from Transaction c where c.user.id = :userId and  YEAR(c.transactionDate) =:year";
+        TypedQuery<Transaction> query = entityManager.createQuery(jpql, Transaction.class);
+        query.setParameter("userId", UatmSessionServiceImpl.user.getId());
+        query.setParameter("year", yearValue);
+        List<Transaction> transactions = query.getResultList();
+        return transactions;
     }
 }
