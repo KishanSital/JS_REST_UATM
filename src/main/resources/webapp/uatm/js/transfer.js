@@ -10,15 +10,15 @@ function loadMoneyTransferView() {
 
 function viewBalanceForTransfer() {
     views.innerHTML +=
-        '<div class="bootstrap-iso custom-child">' +
+        '<div class="bootstrap-iso">' +
         '<h3 class="text-center">Send money</h3>' +
         '<h5 class="text-center">Account you want to send money from</h5>' +
-        '<div class="btn-custom-container">' +
+        '<div class="custom-child">' +
         '<div class="bootstrap-iso btn-custom-child">' +
         '    <form method="post">' +
         '     <div class="form-group ">' +
         '      <label class="control-label requiredField" for="accountSelector">' +
-        '       Select your bank' +
+        '       Select your bank account' +
         '       <span class="asteriskField">' +
         '        *' +
         '       </span>' +
@@ -71,7 +71,7 @@ function generateBalanceTableForTransfer(bankAccounts) {
     var tbl = document.createElement("table");
     tbl.setAttribute('id', 'balanceTable')
     tbl.setAttribute("border", "2");
-    tbl.setAttribute("class", "table");
+    tbl.setAttribute("class", "table center-table");
 
 
     var header = document.createElement('thead');
@@ -148,9 +148,9 @@ function generateBalanceTableForTransfer(bankAccounts) {
 }
 
 function generateTransferView() {
-    sendMoney.innerHTML +=
-        '<div id="transferView" class="card custom-container">' +
-        '<div class="bootstrap-iso custom-child">' +
+    sendMoney.innerHTML = '<br>'+
+        '<div id="transferView" class="custom-child">' +
+        '<div class="bootstrap-iso btn-custom-child card">' +
         '<h5 class="text-center">Account you want to send money to</h5>' +
         ' <div class="container-fluid">' +
         '  <div class="row">' +
