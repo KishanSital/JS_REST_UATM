@@ -130,7 +130,7 @@ function generateTable(transactions) {
     body.appendChild(tbl);
     // sets the border attribute of tbl to 2;
     tbl.setAttribute("border", "2");
-    tbl.setAttribute("class", "table");
+    tbl.setAttribute("class", "table center-table-transactions");
     tbl.setAttribute("id", "transactionsTable");
     body.innerHTML +=
         '</div id="clearTransactionButton">' +
