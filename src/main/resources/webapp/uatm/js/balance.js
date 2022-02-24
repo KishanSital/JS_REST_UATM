@@ -11,9 +11,9 @@ function loadBalanceView() {
 
 function viewBalance() {
     views.innerHTML +=
-        '<div class="bootstrap-iso custom-child">' +
+        '<div class="bootstrap-iso">' +
         '<h3 class="text-center">Bank balance</h3>' +
-        '<div class="btn-custom-container">' +
+        '<div class="custom-child">' +
         '<div class="bootstrap-iso btn-custom-child">' +
         '    <form method="post">' +
         '     <div class="form-group ">' +
@@ -70,7 +70,7 @@ function generateBalanceTable(bankAccounts) {
     var tbl = document.createElement("table");
     tbl.setAttribute('id', 'balanceTable')
     tbl.setAttribute("border", "2");
-    tbl.setAttribute("class", "table");
+    tbl.setAttribute("class", "table center-table-transactions");
 
     var header = document.createElement('thead');
     var headingRow = document.createElement('tr');
