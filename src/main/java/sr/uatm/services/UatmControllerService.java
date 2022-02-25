@@ -24,7 +24,7 @@ public interface UatmControllerService {
 
     List<TransactionDTO> getAllTransactions( TransactionDTO transactionDTO);
 
-    List<Transaction> clearAllTransactions();
+    List<Transaction> clearAllTransactions(Integer transactionDTO);
 
     List<BankAccountDTO> getBankAccounts(Long accountNumber);
 

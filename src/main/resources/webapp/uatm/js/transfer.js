@@ -148,25 +148,25 @@ function generateBalanceTableForTransfer(bankAccounts) {
 }
 
 function generateTransferView() {
-    sendMoney.innerHTML = '<br>'+
+    sendMoney.innerHTML = '<br>' +
         '<div id="transferView" class="custom-child">' +
         '<div class="bootstrap-iso btn-custom-child card">' +
         '<h5 class="text-center">Account you want to send money to</h5>' +
         ' <div class="container-fluid">' +
         '  <div class="row">' +
-        '   <div class="col-md-6 col-sm-6 col-xs-12">' +
+        '   <div class="col-md-6 col-sm-6 col-xs-12"  style="width: 100%;">' +
         '    <form method="post">' +
         '     <div class="form-group ">' +
         '      <label class="control-label requiredField" for="bankSelector">' +
-        '       Select your bank' +
+        '       Select destination bank' +
         '       <span class="asteriskField">' +
         '        *' +
         '       </span>' +
         '      </label>' +
         '      <select class="select form-control" id="bankSelector" name="selectedBank">' +
         '      </select>' +
-        '      <span class="help-block" id="hint_bankSecelctor">' +
-        '       Please destination bank' +
+        '      <span class="help-block" id="hint_bankSelector">' +
+        '       Please select a destination bank' +
         '      </span>' +
         '     </div>' +
         '     <div class="form-group ">' +
@@ -190,7 +190,7 @@ function generateTransferView() {
         '      </label>' +
         '      <input class="form-control" id="transactionAmount" name="transactionAmount" type="number"/>' +
         '      <span class="help-block" id="hint_amount">' +
-        '       Enter the amount you want to send' +
+        '       Enter an amount that is valid' +
         '      </span>' +
         '     </div>' +
         '     <div class="form-group">' +
@@ -215,36 +215,67 @@ function transferMoney() {
     const amount = document.getElementById("transactionAmount").value;
     const destinationBank = document.getElementById("bankSelector").value;
 
-    const xhttp = new XMLHttpRequest();
-    xhttp.open("POST", (restUrl + "transfer-money"));
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp.send(JSON.stringify({
-        "sourceAccountNumber": sourceAccountNumber,
-        "destinationAccountNumber": destinationAccountNumber,
-        "amount": amount,
-        "destinationBank": destinationBank
-    }));
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            const loginStatus = JSON.parse(this.responseText);
-            if (loginStatus) {
-                Swal.fire({
-                    text: 'Transfer was successful',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        sourceAccountForTransfer = null;
-                        getBalanceDataForTransfer();
-                    }
-                });
-            } else {
-                Swal.fire({
-                    text: 'Transfer was unsuccessful',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
+    const hint_bankSelector = document.getElementById("hint_bankSelector");
+    const hint_accountNumber = document.getElementById("hint_accountNumber");
+    const hint_amount = document.getElementById("hint_amount");
+
+    if (destinationBank == '' || destinationBank == 'null' || destinationAccountNumber == '' || amount == '' || amount <= 0) {
+
+        if (destinationBank == '' || destinationBank == 'null') {
+            hint_bankSelector.style.color = 'red';
+        } else {
+            hint_bankSelector.style.color = 'black';
         }
-    };
+
+        if (destinationAccountNumber == '') {
+            hint_accountNumber.style.color = 'red';
+
+        } else {
+            hint_accountNumber.style.color = 'black';
+        }
+
+        if (amount == '' || amount <= 0) {
+            hint_amount.style.color = 'red';
+        } else {
+            hint_amount.style.color = 'black';
+        }
+
+    } else {
+        hint_bankSelector.style.color = 'black';
+        hint_accountNumber.style.color = 'black';
+        hint_amount.style.color = 'black';
+
+        const xhttp = new XMLHttpRequest();
+        xhttp.open("POST", (restUrl + "transfer-money"));
+        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhttp.send(JSON.stringify({
+            "sourceAccountNumber": sourceAccountNumber,
+            "destinationAccountNumber": destinationAccountNumber,
+            "amount": amount,
+            "destinationBank": destinationBank
+        }));
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                const loginStatus = JSON.parse(this.responseText);
+                if (loginStatus) {
+                    Swal.fire({
+                        text: 'Transfer was successful',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            sourceAccountForTransfer = null;
+                            getBalanceDataForTransfer();
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        text: 'Transfer was unsuccessful',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            }
+        };
+    }
 }

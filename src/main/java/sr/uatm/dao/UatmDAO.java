@@ -53,12 +53,27 @@ public class UatmDAO {
         return transactions;
     }
 
-    public int deleteAllTransactionsByUserId() {
+    public int deleteAllTransactionsByUserIdAndYear(Integer transactionYear) {
+        Integer yearValue = null;
+        if (transactionYear != null && !transactionYear.toString().trim().isEmpty() && transactionYear != -1) {
+            yearValue = transactionYear;
+        }
         entityManager.getTransaction().begin();
-        Query query = entityManager.createQuery("delete from Transaction c where c.user.id = :userId");
-        query.setParameter("userId", UatmSessionServiceImpl.user.getId());
-        int rowsDeleted = query.executeUpdate();
-        entityManager.getTransaction().commit();
+        Query query;
+        if (yearValue != null) {
+            query = entityManager.createQuery("delete from Transaction c where c.user.id = :userId and YEAR(c.transactionDate) =:year");
+            query.setParameter("userId", UatmSessionServiceImpl.user.getId());
+            query.setParameter("year", yearValue);
+        } else {
+            query = entityManager.createQuery("delete from Transaction c where c.user.id = :userId");
+            query.setParameter("userId", UatmSessionServiceImpl.user.getId());
+        }
+        int rowsDeleted = 0;
+        try {
+            rowsDeleted = query.executeUpdate();
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+        }
         return rowsDeleted;
     }
 

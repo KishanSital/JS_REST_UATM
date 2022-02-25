@@ -146,8 +146,8 @@ public class UatmControllerServiceImpl implements UatmControllerService {
     }
 
     @Override
-    public List<Transaction> clearAllTransactions() {
-        uatmService.clearTransactionLog();
+    public List<Transaction> clearAllTransactions(Integer transactionYear) {
+        uatmService.clearTransactionLog(transactionYear);
         return uatmService.getAllTransactions();
 
     }

@@ -1,6 +1,5 @@
 package sr.uatm.controller;
 
-import com.github.KishanSital.authenticator.serviceImpl.UserSessionServiceImpl;
 import sr.uatm.designpatterns.creational.builder.entities.uatm.Transaction;
 import sr.uatm.dto.*;
 import sr.uatm.serviceImpl.CardSessionServiceImpl;
@@ -80,11 +79,11 @@ public class UatmController {
         return uatmControllerService.getAllTransactions(transactionDTO);
     }
 
-    @Path("/clear-transactions")
+    @Path("/clear-transactions/{transactionDate}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Transaction> clearAllTransactions() {
-        return uatmControllerService.clearAllTransactions();
+    public List<Transaction> clearAllTransactions(@PathParam("transactionDate") Integer transactionYear) {
+        return uatmControllerService.clearAllTransactions(transactionYear);
     }
 
     @Path("/bank-accounts")

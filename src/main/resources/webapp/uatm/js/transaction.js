@@ -15,7 +15,7 @@ function viewTransaction() {
         '<h3 class="text-center">Transaction Year Report</h3>' +
         '<div class="btn-custom-container">' +
         '<div class="bootstrap-iso btn-custom-child">' +
-        '<input type="text" class="yearpicker" onchange="getTransactionsData(this.value)">' +
+        '<input id="yearSelector" type="number" placeholder="year" style="margin-bottom: 10px" class="yearpicker" onchange="getTransactionsData(this.value)">' +
         '</div>' +
         '</div>';
 
@@ -47,7 +47,7 @@ function getTransactionsData(value) {
     xhttp.setRequestHeader("Content-Type", "application/json");
     if (value) {
         xhttp.send(JSON.stringify({
-            "transactionDate": +value
+            "transactionDate": value
         }));
     } else {
         xhttp.send();
@@ -132,6 +132,7 @@ function generateTable(transactions) {
     tbl.setAttribute("border", "2");
     tbl.setAttribute("class", "table center-table-transactions");
     tbl.setAttribute("id", "transactionsTable");
+    tbl.setAttribute("style", "margin-bottom : 10px;");
     body.innerHTML +=
         '</div id="clearTransactionButton">' +
         '<div class="btn-custom-container">' +
@@ -142,6 +143,8 @@ function generateTable(transactions) {
 }
 
 function clearTransactionLog() {
+    const yearpicker = document.getElementById('yearSelector').value;
+
     var xhttp;
     xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -150,6 +153,6 @@ function clearTransactionLog() {
             getTransactionsData();
         }
     };
-    xhttp.open("DELETE", (restUrl + 'clear-transactions'), true);
+    xhttp.open("DELETE", (restUrl + 'clear-transactions/' + (yearpicker ? yearpicker : -1)), true);
     xhttp.send();
 }

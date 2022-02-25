@@ -13,7 +13,6 @@ import sr.uatm.services.UatmService;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -43,8 +42,8 @@ public class UatmServiceImpl implements UatmService {
     }
 
     @Override
-    public int clearTransactionLog() {
-        return uatmDAO.deleteAllTransactionsByUserId();
+    public int clearTransactionLog(Integer transactionYear) {
+        return uatmDAO.deleteAllTransactionsByUserIdAndYear(transactionYear);
     }
 
     @Override

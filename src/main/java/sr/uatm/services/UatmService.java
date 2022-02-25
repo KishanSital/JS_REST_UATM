@@ -4,6 +4,7 @@ package sr.uatm.services;
 import sr.uatm.designpatterns.creational.builder.entities.bank.BankAccount;
 import sr.uatm.designpatterns.creational.builder.entities.bank.BankCard;
 import sr.uatm.designpatterns.creational.builder.entities.uatm.Transaction;
+import sr.uatm.dto.TransactionDTO;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Map;
 public interface UatmService {
     List<Transaction> getAllTransactions();
 
-    int clearTransactionLog();
+    int clearTransactionLog(Integer transactionDTO);
 
     List<BankAccount> getAllAccountByCardNumber();
 

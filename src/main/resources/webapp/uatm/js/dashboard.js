@@ -1,4 +1,3 @@
-
 getLoggedInStatus();
 
 function getLoggedInStatus() {
@@ -37,7 +36,7 @@ function loadDashboardView() {
         '      </label>' +
         '      <select class="select form-control" id="bankSelector" name="selectedBank">' +
         '      </select>' +
-        '      <span class="help-block" id="hint_bankSecelctor">' +
+        '      <span class="help-block" id="hint_bankSelector">' +
         '       Please select a bank' +
         '      </span>' +
         '     </div>' +
@@ -87,32 +86,65 @@ function createBankConnection() {
     const cardNumber = document.getElementById("cardNumber").value;
     const pinNumber = document.getElementById("cardPin").value;
 
-    const xhttp = new XMLHttpRequest();
-    xhttp.open("POST", (restUrl + "connect-bank"));
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp.send(JSON.stringify({
-        "cardNumber": cardNumber,
-        "cardPin": pinNumber,
-        "selectedBank": selectedBank
-    }));
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            const connectionStatus = JSON.parse(this.responseText);
-            if (connectionStatus) {
-                Swal.fire({
-                    text: 'Connection was successful',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                });
-            } else {
-                Swal.fire({
-                    text: 'Connection was unsuccessful',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
+    console.log(selectedBank);
+    console.log(cardNumber);
+    console.log(pinNumber);
+
+    const hint_bankSelector = document.getElementById("hint_bankSelector");
+    const hint_cardNumber = document.getElementById("hint_cardNumber");
+    const hint_cardPin = document.getElementById("hint_cardPin");
+
+    if (!selectedBank == 'null' || selectedBank == '' || cardNumber == '' || pinNumber == '') {
+
+        if (selectedBank == 'null' || selectedBank == '') {
+            hint_bankSelector.style.color = 'red';
+        } else {
+            hint_bankSelector.style.color = 'black';
         }
-    };
+        if (cardNumber == '') {
+            hint_cardNumber.style.color = 'red';
+        } else {
+            hint_cardNumber.style = 'black';
+        }
+        if (pinNumber == '') {
+            hint_cardPin.style.color = 'red';
+        } else {
+            hint_cardPin.style.color = 'black';
+        }
+
+    } else {
+        hint_bankSelector.style.color = 'black';
+        hint_cardNumber.style = 'black';
+        hint_cardPin.style.color = 'black';
+
+        const xhttp = new XMLHttpRequest();
+        xhttp.open("POST", (restUrl + "connect-bank"));
+        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhttp.send(JSON.stringify({
+            "cardNumber": cardNumber,
+            "cardPin": pinNumber,
+            "selectedBank": selectedBank
+        }));
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                const connectionStatus = JSON.parse(this.responseText);
+                if (connectionStatus) {
+                    Swal.fire({
+                        text: 'Connection was successful',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                } else {
+                    Swal.fire({
+                        text: 'Connection was unsuccessful',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            }
+        };
+    }
+
 }
 
 function closeBankConnection() {
