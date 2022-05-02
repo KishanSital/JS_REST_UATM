@@ -18,7 +18,7 @@ public class EuroToUsdCalculation implements UatmOperation {
 
     @Override
     public BigDecimal executeOperation(BankAccount receiversBankAccount, BigDecimal amountToSend) {
-        return receiversBankAccount.getBankBalance().add(amountToSend.multiply(overmaakKoersMap.get("EURO->SRD").divide(overmaakKoersMap.get("USD->SRD"), RoundingMode.DOWN)));
+        return receiversBankAccount.getBankBalance().add(amountToSend.multiply(overmaakKoersMap.get("EURO").divide(overmaakKoersMap.get("USD"), RoundingMode.DOWN)));
 
     }
 }

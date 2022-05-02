@@ -1,6 +1,7 @@
 package sr.uatm.services;
 
 import sr.uatm.designpatterns.creational.builder.entities.bank.BankAccount;
+import sr.uatm.designpatterns.creational.builder.entities.uatm.CurrencyConfig;
 import sr.uatm.designpatterns.creational.builder.entities.uatm.Transaction;
 import sr.uatm.dto.*;
 
@@ -29,4 +30,6 @@ public interface UatmControllerService {
     List<BankAccountDTO> getBankAccounts(Long accountNumber);
 
     boolean transferMoney(MoneyTransferDTO moneyTransferDTO);
+
+    List<CurrencyConfig> getCurrencyExchangeRates();
 }

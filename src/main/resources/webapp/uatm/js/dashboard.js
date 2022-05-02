@@ -25,7 +25,7 @@ function loadDashboardView() {
         '<h3 class="text-center">Connect to bank</h3>' +
         ' <div class="container-fluid">' +
         '  <div class="row">' +
-        '   <div class="col-md-6 col-sm-6 col-xs-12">' +
+        '   <div class="col-md-12 col-sm-12 col-xs-12">' +
         '    <form method="post">' +
         '     <div class="form-group ">' +
         '      <label class="control-label requiredField" for="bankSelector">' +
@@ -75,9 +75,100 @@ function loadDashboardView() {
         '  </div>' +
         ' </div>' +
         ' </div>' +
-        '</div>';
+        '</div>' +
+        '<br>';
+
+    populateExchangeRateTable();
 
     populateBankOptions();
+}
+
+
+function populateExchangeRateTable() {
+    let xhttp;
+    xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        //4 = opgehaald, 200 = call is ok
+        if (this.readyState === 4 && this.status === 200) {
+            let exchangeRates = JSON.parse(this.responseText);
+            if (exchangeRates && exchangeRates.length) {
+                generateTableForExchageRates(exchangeRates);
+            }
+        }
+    };
+    xhttp.open("GET", (restUrl + 'exchange-rates'), true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    xhttp.send();
+}
+
+function generateTableForExchageRates(exchangeRates) {
+
+    clearTableData();
+
+    // get the reference for the body
+    var body = tables;
+
+    // creates a <table> element and a <tbody> element
+
+    var tbl = document.createElement("table");
+    tbl.setAttribute('id', 'balanceTable')
+    tbl.setAttribute("border", "2");
+    tbl.setAttribute("class", "table center-table");
+
+
+    var header = document.createElement('thead');
+    var headingRow = document.createElement('tr');
+
+    var headingCell1 = document.createElement('td');
+    var headingText1 = document.createTextNode('Currency');
+    headingCell1.appendChild(headingText1);
+    headingRow.appendChild(headingCell1);
+
+    var headingCell2 = document.createElement('td');
+    var headingText2 = document.createTextNode('Exchange Rate');
+    headingCell2.appendChild(headingText2);
+    headingRow.appendChild(headingCell2);
+
+    header.appendChild(headingRow)
+    tbl.appendChild(header)
+    //var header = "<th>Header</th>";
+    var tblBody = document.createElement("tbody");
+
+
+    // creating all cells
+    for (var i = 0; i < exchangeRates.length; i++) {
+        // creates a table row
+        var row = document.createElement("tr");
+
+        for (var j = 0; j < 2; j++) {
+            // Create a <td> element and a text node, make the text
+            // node the contents of the <td>, and put the <td> at
+            // the end of the table row
+            var cell = document.createElement("td");
+            if (j === 0) {
+                var cellText = document.createTextNode(exchangeRates[i].currencyCode);
+            } else if (j === 1) {
+                var cellText = document.createTextNode(exchangeRates[i].exchangeRate);
+            }
+
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+        }
+
+        // add the row to the end of the table body
+        tblBody.appendChild(row);
+    }
+    // This is for the quick solution
+    // tbl.innerHTML = header
+
+    // put the <tbody> in the <table>
+    tbl.appendChild(tblBody);
+
+
+    // appends <table> into <body>
+    body.appendChild(tbl);
+    // sets the border attribute of tbl to 2;
+
 }
 
 function createBankConnection() {

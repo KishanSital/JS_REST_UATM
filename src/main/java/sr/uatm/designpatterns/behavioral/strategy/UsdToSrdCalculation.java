@@ -17,7 +17,7 @@ public class UsdToSrdCalculation implements UatmOperation {
 
     @Override
     public BigDecimal executeOperation(BankAccount receiversBankAccount, BigDecimal amountToSend) {
-        return receiversBankAccount.getBankBalance().add(amountToSend.multiply(overmaakKoersMap.get("USD->SRD")));
+        return receiversBankAccount.getBankBalance().add(amountToSend.multiply(overmaakKoersMap.get("USD")));
 
     }
 }

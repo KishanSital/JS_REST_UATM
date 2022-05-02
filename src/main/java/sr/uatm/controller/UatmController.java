@@ -1,5 +1,6 @@
 package sr.uatm.controller;
 
+import sr.uatm.designpatterns.creational.builder.entities.uatm.CurrencyConfig;
 import sr.uatm.designpatterns.creational.builder.entities.uatm.Transaction;
 import sr.uatm.dto.*;
 import sr.uatm.serviceImpl.CardSessionServiceImpl;
@@ -58,6 +59,13 @@ public class UatmController {
     @Produces(MediaType.APPLICATION_JSON)
     public List<String> getBankOptions() {
         return uatmControllerService.getBankOptions();
+    }
+
+    @Path("/exchange-rates")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<CurrencyConfig> getCurrencyExchangeRates() {
+        return uatmControllerService.getCurrencyExchangeRates();
     }
 
     @Path("/connect-bank")

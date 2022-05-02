@@ -1,6 +1,7 @@
 package sr.uatm.dao;
 
 
+import sr.uatm.designpatterns.creational.builder.entities.uatm.CurrencyConfig;
 import sr.uatm.designpatterns.creational.builder.entities.uatm.Transaction;
 import sr.uatm.designpatterns.creational.builder.entities.uatm.User;
 import sr.uatm.serviceImpl.UatmSessionServiceImpl;
@@ -8,7 +9,10 @@ import sr.uatm.serviceImpl.UatmSessionServiceImpl;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class UatmDAO {
     private EntityManager entityManager;
@@ -85,5 +89,25 @@ public class UatmDAO {
         query.setParameter("year", yearValue);
         List<Transaction> transactions = query.getResultList();
         return transactions;
+    }
+
+    public Map<String, BigDecimal> getOvermaakKoersMap() {
+        String jpql = "select k from CurrencyConfig k";
+        TypedQuery<CurrencyConfig> query = entityManager.createQuery(jpql, CurrencyConfig.class);
+        List<CurrencyConfig> currencyConfigList = query.getResultList();
+
+        if (currencyConfigList.isEmpty()) {
+            return null;
+        }
+        return currencyConfigList
+                .stream()
+                .collect(Collectors.toMap(CurrencyConfig::getCurrencyCode, CurrencyConfig::getExchangeRate));
+    }
+
+    public List<CurrencyConfig> getExchangeRates() {
+        String jpql = "select k from CurrencyConfig k";
+        TypedQuery<CurrencyConfig> query = entityManager.createQuery(jpql, CurrencyConfig.class);
+        List<CurrencyConfig> currencyConfigList = query.getResultList();
+        return currencyConfigList;
     }
 }

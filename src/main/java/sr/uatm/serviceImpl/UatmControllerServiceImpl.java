@@ -3,6 +3,7 @@ package sr.uatm.serviceImpl;
 import sr.uatm.dao.UatmDAO;
 import sr.uatm.designpatterns.creational.builder.entities.bank.BankAccount;
 import sr.uatm.designpatterns.creational.builder.entities.bank.BankCard;
+import sr.uatm.designpatterns.creational.builder.entities.uatm.CurrencyConfig;
 import sr.uatm.designpatterns.creational.builder.entities.uatm.Transaction;
 import sr.uatm.designpatterns.creational.builder.entities.uatm.User;
 import sr.uatm.designpatterns.creational.factory.JPAConfiguration;
@@ -17,15 +18,12 @@ import java.util.stream.Collectors;
 
 public class UatmControllerServiceImpl implements UatmControllerService {
 
-    private final Map<String, BigDecimal> overmaakKoersMap = new HashMap<>();
     private final Map<String, JPAConfiguration> JPAConfigurationMap = new HashMap<>();
     private final UatmDAO uatmDAO;
     private final Map<Integer, String> bankOptions = new LinkedHashMap();
     private final UatmServiceImpl uatmService;
 
     public UatmControllerServiceImpl() {
-        overmaakKoersMap.put("USD->SRD", BigDecimal.valueOf(2.00));
-        overmaakKoersMap.put("EURO->SRD", BigDecimal.valueOf(4.00));
 
         JPAConfigurationMap.put("UATM", new JPAConfigurationFactory().getJPAConfiguration("UATM"));
         JPAConfigurationMap.put("CBVS", new JPAConfigurationFactory().getJPAConfiguration("CBVS"));
@@ -37,7 +35,7 @@ public class UatmControllerServiceImpl implements UatmControllerService {
         bankOptions.put(3, "HKB");
 
         uatmDAO = new UatmDAO(JPAConfigurationMap.get("UATM").getEntityManager());
-        uatmService = new UatmServiceImpl(JPAConfigurationMap, uatmDAO, bankOptions, overmaakKoersMap);
+        uatmService = new UatmServiceImpl(JPAConfigurationMap, uatmDAO, bankOptions);
     }
 
 
@@ -176,6 +174,11 @@ public class UatmControllerServiceImpl implements UatmControllerService {
                 .filter(bankAccount -> bankAccount.getAccountNumber().equals(accountNumber))
                 .collect(Collectors.toList());
         return bankAccounts;
+    }
+
+    @Override
+    public List<CurrencyConfig> getCurrencyExchangeRates() {
+        return uatmDAO.getExchangeRates();
     }
 
     @Override

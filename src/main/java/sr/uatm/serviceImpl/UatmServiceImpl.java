@@ -1,7 +1,6 @@
 package sr.uatm.serviceImpl;
 
 
-
 import sr.uatm.dao.BankDAO;
 import sr.uatm.dao.UatmDAO;
 import sr.uatm.designpatterns.behavioral.strategy.*;
@@ -21,15 +20,13 @@ public class UatmServiceImpl implements UatmService {
     private final Map<String, JPAConfiguration> jpaConfigurationsMap;
     private final UatmDAO uatmDAO;
     private final Map<Integer, String> bankOptions;
-    private final Map<String, BigDecimal> overmaakKoersMap;
     private UatmContext uatmContext;
 
     public UatmServiceImpl(Map<String, JPAConfiguration> jpaConfigurationsMap,
-                           UatmDAO uatmDAO, Map<Integer, String> bankOptions, Map<String, BigDecimal> overmaakKoersMap) {
+                           UatmDAO uatmDAO, Map<Integer, String> bankOptions) {
         this.jpaConfigurationsMap = jpaConfigurationsMap;
         this.uatmDAO = uatmDAO;
         this.bankOptions = bankOptions;
-        this.overmaakKoersMap = overmaakKoersMap;
     }
 
     public Map<String, JPAConfiguration> getJpaConfigurationsMap() {
@@ -177,7 +174,7 @@ public class UatmServiceImpl implements UatmService {
 
     @Override
     public Map<String, BigDecimal> getOvermaakKoersMap() {
-        return overmaakKoersMap;
+        return uatmDAO.getOvermaakKoersMap();
     }
 
     @Override
