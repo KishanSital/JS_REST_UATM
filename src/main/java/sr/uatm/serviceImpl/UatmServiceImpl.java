@@ -178,7 +178,8 @@ public class UatmServiceImpl implements UatmService {
     }
 
     @Override
-    public List<Transaction> getTransactionByYear(String year) {
-        return uatmDAO.findAllTransactionsByYear(year);
+    public List<Transaction> getTransactionByYearAndQuarter(Integer year,
+                                                            Integer quarter) {
+        return uatmDAO.findAllTransactionsByYearAndQuarter(year, quarter);
     }
 }

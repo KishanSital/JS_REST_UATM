@@ -81,12 +81,22 @@ public class UatmDAO {
         return rowsDeleted;
     }
 
-    public List<Transaction> findAllTransactionsByYear(String year) {
-        Integer yearValue = Integer.valueOf(year);
-        String jpql = "select c from Transaction c where c.user.id = :userId and  YEAR(c.transactionDate) =:year";
+    public List<Transaction> findAllTransactionsByYearAndQuarter(Integer year, Integer quarter) {
+        String jpql = "select c from Transaction c where c.user.id = :userId ";
+        if (quarter != null) {
+            jpql += " and QUARTER(c.transactionDate) =:quarter";
+        }
+        if (year != null) {
+            jpql += " and YEAR(c.transactionDate) =:year";
+        }
         TypedQuery<Transaction> query = entityManager.createQuery(jpql, Transaction.class);
         query.setParameter("userId", UatmSessionServiceImpl.user.getId());
-        query.setParameter("year", yearValue);
+        if (year != null) {
+            query.setParameter("year", year);
+        }
+        if (quarter != null) {
+            query.setParameter("quarter", quarter);
+        }
         List<Transaction> transactions = query.getResultList();
         return transactions;
     }

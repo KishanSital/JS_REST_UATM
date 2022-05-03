@@ -11,16 +11,27 @@ public class TransactionDTO {
 
     private String transactionSource;
 
+    private Integer quarter;
+
+    private Integer year;
+
+    public TransactionDTO() {
+    }
+
+    public TransactionDTO(String transactionDate, BigDecimal transactionAmount, String transactionDescription, String transactionSource, Integer quarter) {
+        this.transactionDate = transactionDate;
+        this.transactionAmount = transactionAmount;
+        this.transactionDescription = transactionDescription;
+        this.transactionSource = transactionSource;
+        this.quarter = quarter;
+    }
+
     public TransactionDTO(String transactionDate, BigDecimal transactionAmount, String transactionDescription, String transactionSource) {
         this.transactionDate = transactionDate;
         this.transactionAmount = transactionAmount;
         this.transactionDescription = transactionDescription;
         this.transactionSource = transactionSource;
     }
-
-    public TransactionDTO() {
-    }
-
 
     public String getTransactionDate() {
         return transactionDate;
@@ -52,5 +63,21 @@ public class TransactionDTO {
 
     public void setTransactionSource(String transactionSource) {
         this.transactionSource = transactionSource;
+    }
+
+    public Integer getQuarter() {
+        return quarter;
+    }
+
+    public void setQuarter(Integer quarter) {
+        this.quarter = quarter;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 }

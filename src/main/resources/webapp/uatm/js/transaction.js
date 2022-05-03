@@ -12,18 +12,24 @@ function clear() {
 function viewTransaction() {
     views.innerHTML +=
         '<div class="bootstrap-iso custom-child">' +
-        '<h3 class="text-center">Transaction Year Report</h3>' +
+        '<h3 class="text-center">Transaction Report</h3>' +
         '<div class="btn-custom-container">' +
         '<div class="bootstrap-iso btn-custom-child">' +
-        '<input id="yearSelector" type="number" placeholder="year" style="margin-bottom: 10px" class="yearpicker" onchange="getTransactionsData(this.value)">' +
+        '<input id="yearSelector" type="number" placeholder="year" style="margin-bottom: 10px" class="yearpicker" onchange="getTransactionsData()">' +
+        '<select id="quarter" style="height: 25px" name="quarter" onchange="getTransactionsData()">' +
+        '            <option value="">Select quarter</option>' +
+        '            <option value=1>1</option>' +
+        '            <option value=2>2</option>' +
+        '            <option value=3>3</option>' +
+        '            <option value=4>4</option>' +
+        '        </select>' +
         '</div>' +
         '</div>';
-
     $('.yearpicker').yearpicker()
 
 }
 
-function getTransactionsData(value) {
+function getTransactionsData() {
     clearTableData();
     let xhttp;
     xhttp = new XMLHttpRequest();
@@ -36,7 +42,7 @@ function getTransactionsData(value) {
             } else {
                 views.innerHTML +=
                     '<h4 id="nothingFound" class="text-center"></h4>';
-                document.getElementById('nothingFound').innerHTML = "No transactions were found for year " + value + " <br> So we've displayed the complete report";
+                document.getElementById('nothingFound').innerHTML = "No transactions were found <br> So we've displayed the complete report";
                 $('.yearpicker').yearpicker();
                 clear();
             }
@@ -45,9 +51,17 @@ function getTransactionsData(value) {
     };
     xhttp.open("POST", (restUrl + 'transactions'), true);
     xhttp.setRequestHeader("Content-Type", "application/json");
-    if (value) {
+
+    let quarterSelect = document.getElementById('quarter');
+    let quarterValue = quarterSelect.options[quarterSelect.selectedIndex].value;
+
+    let yearInput = document.getElementById("yearSelector");
+    let yearValue = yearInput.value;
+
+    if (yearValue || quarterValue) {
         xhttp.send(JSON.stringify({
-            "transactionDate": value
+            "year": yearValue,
+            "quarter": quarterValue
         }));
     } else {
         xhttp.send();
@@ -153,6 +167,10 @@ function clearTransactionLog() {
             getTransactionsData();
         }
     };
-    xhttp.open("DELETE", (restUrl + 'clear-transactions/' + (yearpicker ? yearpicker : -1)), true);
-    xhttp.send();
+    xhttp.open("DELETE", (restUrl + "clear-transactions"), true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.send(JSON.stringify({
+        "year": (yearpicker ? yearpicker : -1),
+    }));
+
 }

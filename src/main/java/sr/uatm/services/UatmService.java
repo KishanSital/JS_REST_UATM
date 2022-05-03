@@ -37,5 +37,5 @@ public interface UatmService {
 
     Map<String, BigDecimal> getOvermaakKoersMap();
 
-    List<Transaction> getTransactionByYear(String year);
+    List<Transaction> getTransactionByYearAndQuarter(Integer year, Integer quarter);
 }

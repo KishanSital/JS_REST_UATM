@@ -87,11 +87,11 @@ public class UatmController {
         return uatmControllerService.getAllTransactions(transactionDTO);
     }
 
-    @Path("/clear-transactions/{transactionDate}")
+    @Path("/clear-transactions")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Transaction> clearAllTransactions(@PathParam("transactionDate") Integer transactionYear) {
-        return uatmControllerService.clearAllTransactions(transactionYear);
+    public List<Transaction> clearAllTransactions(TransactionDTO transactionDTO) {
+        return uatmControllerService.clearAllTransactions(transactionDTO.getYear());
     }
 
     @Path("/bank-accounts")
